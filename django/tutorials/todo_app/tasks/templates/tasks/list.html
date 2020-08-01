@@ -1,0 +1,52 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200;1,300;1,500&family=Roboto:wght@300;500&display=swap" rel="stylesheet"> 
+    <title>List</title>
+</head>
+<body>
+    <div class="popout">
+        <div class="container">
+
+            <div class="page-name">
+                <h3 class="hero-text">To Do</h3>
+            </div>
+        
+            <div class="item-input">
+                <form method="POST" action="/">
+                    {% csrf_token %}
+                    {{form.title}}
+                    <input type="submit" value="Add" name="Create Task">
+                </form>
+            </div>
+        
+            <div class="task-list">
+                {% for task in tasks %}
+                <div class="individual-task">
+            
+                    {% if task.complete == True %}
+                    <strike>{{task}}</strike>
+                    {% else %}
+                    <span>{{task}}</span>
+                    {% endif %}
+            
+
+                    <div class="crud-btns">
+                        <a class="update" href="{% url 'update_task' task.id %}">update</a>
+                        <a class="delete" href="{% url 'delete' task.id %}">delete</a>
+                    </div>
+                    
+                        
+                </div>
+                {% endfor %}
+            </div>
+        
+        </div>
+    </div>
+
+</body>
+</html>
